@@ -1,6 +1,6 @@
 module.exports = {
   arrowParens: 'avoid',
-  printWidth: 100,
+  printWidth: 110,
   singleQuote: true,
   trailingComma: 'none'
 };
