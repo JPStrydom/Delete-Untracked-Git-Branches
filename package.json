@@ -2,17 +2,6 @@
   "name": "delete-untracked-git-branches",
   "version": "1.0.0",
   "description": "Delete all those annoying untracked Git branches in one foul swoop",
-  "main": "index.js",
-  "bin": {
-    "delete-untracked-git-branches": "./index.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JPStrydom/Delete-Untracked-Git-Branches.git"
-  },
   "keywords": [
     "git",
     "untracked",
@@ -25,10 +14,23 @@
     "email": "jpstrydom8@gmail.com"
   },
   "license": "MIT",
+  "main": "index.js",
+  "bin": {
+    "delete-untracked-git-branches": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JPStrydom/Delete-Untracked-Git-Branches.git"
+  },
   "bugs": {
     "url": "https://github.com/JPStrydom/Delete-Untracked-Git-Branches/issues"
   },
   "homepage": "https://github.com/JPStrydom/Delete-Untracked-Git-Branches#readme",
+  "scripts": {
+    "prepare": "husky",
+    "prettier": "prettier --write \"./**/*.{js,json,md}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "devDependencies": {
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
