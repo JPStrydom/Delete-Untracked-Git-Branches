@@ -28,8 +28,7 @@ const { checkoutBranch, protectedBranches, dryRun } = yargs(hideBin(process.argv
 
 let stepNumber = 1;
 const numberOfSteps = 5;
-const rootDirectory = path.join(__dirname, '../');
-const execOptions = { cwd: rootDirectory, stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' };
+const execOptions = { cwd: __dirname, stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' };
 
 const display = (content, indent = 0) => console.log(`${indent ? '  '.repeat(indent) : '\n'}${content}`);
 const displayProgress = content => display(`[${stepNumber++}/${numberOfSteps}] ${content}`);

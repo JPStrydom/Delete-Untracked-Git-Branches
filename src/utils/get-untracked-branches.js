@@ -1,9 +1,19 @@
+const createUntrackedBranchFilter =
+  ({ checkoutBranch, protectedBranches }) =>
+  ([branchName, upstreamBranch, upstreamTrack]) =>
+    branchName &&
+    branchName !== checkoutBranch &&
+    !protectedBranches?.includes(branchName) &&
+    (!upstreamBranch || upstreamTrack === '[gone]');
+
 const getUntrackedBranches = ({ checkoutBranch, protectedBranches, executeCommand }) =>
-  executeCommand('git branch -vv')
-    .toString()
+  executeCommand(
+    'git for-each-ref refs/heads --format="%(refname:short) %(upstream:short) %(upstream:track)"'
+  )
     .split('\n')
-    .filter(branch => branch.includes(': gone]'))
-    .map(branch => branch.trim().split(' ')[0])
-    .filter(branch => branch !== checkoutBranch && !protectedBranches?.includes(branch));
+    .map(line => console.log(line) || line)
+    .map(branchRef => branchRef.split(' '))
+    .filter(createUntrackedBranchFilter({ checkoutBranch, protectedBranches }))
+    .map(([branchName]) => branchName);
 
 module.exports = { getUntrackedBranches };
