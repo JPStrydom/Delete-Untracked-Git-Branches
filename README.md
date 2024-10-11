@@ -1,6 +1,6 @@
 # Delete-Untracked-Git-Branches
 
-Delete all those annoying untracked Git branches in one foul swoop
+Delete all those annoying untracked local Git branches in one foul swoop
 
 ## Installation
 
@@ -10,12 +10,13 @@ npm i delete-untracked-git-branches -D
 
 ## Usage
 
-The delete-untracked-git-branches script has the following options:
+The delete-untracked-git-branches script has the following executeOptions:
 
-| Option                 | Alias | Description                                                                   | Type     | Required | Default |
-| ---------------------- | ----- | ----------------------------------------------------------------------------- | -------- | :------: | ------- |
-| `--checkout-branch`    | `-c`  | A branch to checkout before performing the branch deletes.                    | `string` |          |         |
-| `--protected-branches` | `-p`  | Branches to exclude from the branch deletes. These should be comma-separated. | `string` |          |         |
+| Option                 | Alias | Description                                                                   | Type      | Default |
+| ---------------------- | ----- | ----------------------------------------------------------------------------- | --------- | ------- |
+| `--checkout-branch`    | `-c`  | A branch to checkout before performing the branch deletes.                    | `string`  |         |
+| `--protected-branches` | `-p`  | Branches to exclude from the branch deletes. These should be comma-separated. | `string`  |         |
+| `--dry-run`            | `-d`  | List untracked branches without deleting them.                                | `boolean` | `false` |
 
 _NOTE: Make sure that you don't have any uncommitted changes, else the script will likely encounter issues._
 
