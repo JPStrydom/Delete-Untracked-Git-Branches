@@ -11,7 +11,6 @@ const getUntrackedBranches = ({ checkoutBranch, protectedBranches, executeComman
     'git for-each-ref refs/heads --format="%(refname:short) %(upstream:short) %(upstream:track)"'
   )
     .split('\n')
-    .map(line => console.log(line) || line)
     .map(branchRef => branchRef.split(' '))
     .filter(createUntrackedBranchFilter({ checkoutBranch, protectedBranches }))
     .map(([branchName]) => branchName);

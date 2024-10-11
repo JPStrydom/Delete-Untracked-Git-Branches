@@ -34,13 +34,17 @@
   "homepage": "https://github.com/JPStrydom/Delete-Untracked-Git-Branches#readme",
   "scripts": {
     "build": "node build.js",
-    "prebuild": "rimraf dist",
+    "clean": "rimraf dist test-repo test-remote-repo.git \"delete-untracked-git-branches-*.tgz\" --glob",
+    "posttest": "npm run clean",
+    "prebuild": "npm run clean",
     "prepack": "npm run build",
     "prepare": "husky",
+    "pretest": "npm pack",
     "prettier": "prettier --write \"./**/*.{js,json,md}\"",
-    "test": "node index.js -dry-run"
+    "test": "node test.js"
   },
   "dependencies": {
+    "delete-untracked-git-branches": "file:delete-untracked-git-branches-1.0.0.tgz",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
