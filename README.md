@@ -1,47 +1,99 @@
 # Delete-Untracked-Git-Branches
 
-Delete all those annoying untracked local Git branches in one foul swoop
+Delete all those annoying untracked local Git branches in one fell swoop.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Options](#options)
+- [Examples](#examples)
+  - [Delete All Untracked Branches](#delete-all-untracked-branches)
+  - [Checkout a Branch Before Deletion](#checkout-a-branch-before-deletion)
+  - [Protect Certain Branches from Deletion](#protect-certain-branches-from-deletion)
+  - [Dry Run](#dry-run)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Overview
+
+`delete-untracked-git-branches` is a command-line tool that helps you clean up your local Git repository by deleting branches that are no longer tracked by a remote repository or have been merged. This is particularly useful when you have numerous local branches that are not needed anymore, and you want to delete them quickly without manually checking each one.
+
+**Note:** Ensure that you don't have any uncommitted changes before running the script, as it might encounter issues or cause data loss.
 
 ## Installation
 
+You can install `delete-untracked-git-branches` globally using npm:
+
 ```shell
-npm i delete-untracked-git-branches -D
+npm install -g delete-untracked-git-branches
+```
+
+Alternatively, install it as a development dependency in your project:
+
+```shell
+npm install --save-dev delete-untracked-git-branches
+```
+
+Or, you can use it without installing by using `npx`:
+
+```shell
+npx delete-untracked-git-branches [options]
 ```
 
 ## Usage
 
-The delete-untracked-git-branches script has the following executeOptions:
+The `delete-untracked-git-branches` script supports the following options:
 
-| Option                 | Alias | Description                                                                   | Type      | Default |
-| ---------------------- | ----- | ----------------------------------------------------------------------------- | --------- | ------- |
-| `--checkout-branch`    | `-c`  | A branch to checkout before performing the branch deletes.                    | `string`  |         |
-| `--protected-branches` | `-p`  | Branches to exclude from the branch deletes. These should be comma-separated. | `string`  |         |
-| `--dry-run`            | `-d`  | List untracked branches without deleting them.                                | `boolean` | `false` |
+### Options
 
-_NOTE: Make sure that you don't have any uncommitted changes, else the script will likely encounter issues._
+| Option                 | Alias | Description                                                    | Type      | Default |
+| ---------------------- | ----- | -------------------------------------------------------------- | --------- | ------- |
+| `--checkout-branch`    | `-c`  | The branch to checkout before performing the branch deletions. | `string`  |         |
+| `--protected-branches` | `-p`  | Comma-separated list of branches to exclude from deletion.     | `string`  |         |
+| `--dry-run`            | `-d`  | Lists untracked branches without deleting them.                | `boolean` | `false` |
 
 ## Examples
 
-If you want to delete all your untracked branches, the following script can be run:
+### Delete All Untracked Branches
+
+To delete all your untracked branches:
 
 ```shell
 delete-untracked-git-branches
 ```
 
-If you want to checkout another branch, say `development`, before deleting all your untracked branches, the following script can be run:
+### Checkout a Branch Before Deletion
+
+If you want to checkout another branch (e.g., `development`) before deleting untracked branches:
 
 ```shell
-delete-untracked-git-branches -- -c development
+delete-untracked-git-branches -c development
 ```
 
-If you want to protect certain branches from being deleted, say `development` and `main`, the following script can be run:
+### Protect Certain Branches from Deletion
+
+To protect certain branches (e.g., `development` and `main`) from being deleted:
 
 ```shell
-delete-untracked-git-branches -- -p development,main
+delete-untracked-git-branches -p development,main
 ```
 
-If you're having trouble running the above commands on older Windows terminals you can try adding another argument delimiter (`--`), for example:
+### Dry Run
+
+To list all untracked branches without deleting them (dry run):
 
 ```shell
-delete-untracked-git-branches -- -- -c development -p development,main
+delete-untracked-git-branches --dry-run
 ```
+
+This command will display the branches that would be deleted without actually deleting them.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request on [GitHub](https://github.com/JPStrydom/Delete-Untracked-Git-Branches).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

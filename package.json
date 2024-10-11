@@ -1,7 +1,7 @@
 {
   "name": "delete-untracked-git-branches",
-  "version": "1.0.0",
-  "description": "Delete all those annoying untracked local Git branches in one foul swoop",
+  "version": "1.0.1",
+  "description": "Delete all those annoying untracked local Git branches in one fell swoop",
   "keywords": [
     "git",
     "untracked",
@@ -44,7 +44,6 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "delete-untracked-git-branches": "file:delete-untracked-git-branches-1.0.0.tgz",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
