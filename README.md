@@ -1,4 +1,4 @@
-# Delete-Untracked-Git-Branches
+# Delete Untracked Git Branches
 
 Delete all those annoying untracked local Git branches in one fell swoop.
 

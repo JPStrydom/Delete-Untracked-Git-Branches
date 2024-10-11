@@ -1,13 +1,18 @@
 {
   "name": "delete-untracked-git-branches",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Delete all those annoying untracked local Git branches in one fell swoop",
   "keywords": [
     "git",
-    "untracked",
-    "branches",
-    "branch",
-    "delete"
+    "git-branches",
+    "untracked-branches",
+    "branch-cleanup",
+    "delete-branches",
+    "git-cleanup",
+    "branch-management",
+    "cli",
+    "automation",
+    "productivity"
   ],
   "author": {
     "name": "JP Strydom",
