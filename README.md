@@ -85,7 +85,7 @@ delete-untracked-git-branches -p development,main
 To list all untracked branches without deleting them (dry run):
 
 ```shell
-delete-untracked-git-branches --dry-run
+delete-untracked-git-branches -d
 ```
 
 This command will display the branches that would be deleted without actually deleting them.
