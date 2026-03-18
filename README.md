@@ -51,7 +51,7 @@ The `delete-untracked-git-branches` script supports the following options:
 | Option                 | Alias | Description                                                    | Type      | Default |
 | ---------------------- | ----- | -------------------------------------------------------------- | --------- | ------- |
 | `--checkout-branch`    | `-c`  | The branch to checkout before performing the branch deletions. | `string`  |         |
-| `--protected-branches` | `-p`  | Comma-separated list of branches to exclude from deletion.     | `string`  |         |
+| `--protected-branches` | `-p`  | List of branches to exclude from deletion.                     | `array`   |         |
 | `--dry-run`            | `-d`  | Lists untracked branches without deleting them.                | `boolean` | `false` |
 
 ## Examples
@@ -74,11 +74,17 @@ delete-untracked-git-branches -c development
 
 ### Protect Certain Branches from Deletion
 
-To protect certain branches (e.g., `development` and `main`) from being deleted:
+To protect certain branches (e.g., `development` and `main`) from being deleted, pass them as an array by either separating them with spaces, or declaring the flag multiple times:
 
 ```shell
-delete-untracked-git-branches -p development,main
+# Option 1: Space-separated
+delete-untracked-git-branches -p development main
+
+# Option 2: Multiple flags
+delete-untracked-git-branches -p development -p main
 ```
+
+_(Note: Comma-separated strings like `-p development,main` are also supported for backwards compatibility)_
 
 ### Dry Run
 

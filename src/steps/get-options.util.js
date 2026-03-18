@@ -7,7 +7,7 @@ import { createDisplayFunctions } from './utils/index.js';
 
 const argv = yargs(hideBin(process.argv))
   .scriptName('Delete Untracked Git Branches')
-  .usage('delete-untracked-git-branches -- -c dev -p dev,master')
+  .usage('delete-untracked-git-branches -- -c dev -p dev master')
   .option('c', {
     alias: 'checkout-branch',
     describe: 'A branch to checkout before performing the branch deletes.',
@@ -16,9 +16,8 @@ const argv = yargs(hideBin(process.argv))
   })
   .option('p', {
     alias: 'protected-branches',
-    describe: 'Branches to exclude from the branch deletes. These should be comma-separated.',
-    type: 'string',
-    nargs: 1
+    describe: 'Branches to exclude from the branch deletes.',
+    type: 'array'
   })
   .option('d', {
     alias: 'dry-run',
@@ -41,7 +40,7 @@ const questions = [
     type: 'input',
     name: 'protectedBranches',
     message: 'Which branches should be protected from deletion? (Comma-separated, e.g. "dev,master")',
-    default: argv.protectedBranches || 'main,master,dev,develop',
+    default: argv.protectedBranches ? argv.protectedBranches.join(',') : 'main,master,dev,develop',
     when: argv.protectedBranches === undefined
   },
   {
@@ -53,14 +52,31 @@ const questions = [
   }
 ];
 
+const parseSelections = (value, defaultValue) => {
+  if (value === undefined) {
+    return defaultValue;
+  }
+
+  const arrayValue = Array.isArray(value) ? value : [value];
+
+  return arrayValue
+    .flatMap(item => (typeof item === 'string' ? item.split(',') : item))
+    .map(item => (typeof item === 'string' ? item.trim() : item))
+    .filter(Boolean);
+};
+
 export const getOptions = async () => {
   const answers = await inquirer.prompt(questions);
 
-  const checkoutBranch = answers.checkoutBranch || argv.checkoutBranch;
-  const protectedBranches = answers.protectedBranches || argv.protectedBranches;
-  const dryRun = answers.dryRun ?? argv.dryRun;
+  const checkoutBranch =
+    (answers.checkoutBranch !== undefined ? answers.checkoutBranch : argv.checkoutBranch) || '';
+  const protectedBranches = parseSelections(
+    answers.protectedBranches !== undefined ? answers.protectedBranches : argv.protectedBranches,
+    ['main', 'master', 'dev', 'develop']
+  );
+  const dryRun = answers.dryRun !== undefined ? answers.dryRun : argv.dryRun;
 
-  const displayFunctions = createDisplayFunctions({ totalSteps: 4 });
+  const displayFunctions = createDisplayFunctions({ totalSteps: checkoutBranch ? 5 : 4 });
 
   const execOptions = { cwd: process.cwd(), stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' };
   const executeCommand = (command, errorMessage) => {

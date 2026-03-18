@@ -67,7 +67,7 @@ const createTestBranches = () => {
 };
 
 const runCliTool = () => {
-  let toolOutput = runCommand('npx delete-untracked-git-branches');
+  let toolOutput = runCommand('npx delete-untracked-git-branches -c master -p master -d false');
   toolOutput.forEach(branch => displayInfo(branch, true));
 };
 
