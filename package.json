@@ -1,6 +1,6 @@
 {
   "name": "delete-untracked-git-branches",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Delete all those annoying untracked local Git branches in one fell swoop",
   "keywords": [
     "git",
