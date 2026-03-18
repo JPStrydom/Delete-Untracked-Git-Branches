@@ -1,7 +1,7 @@
 import { build } from 'esbuild';
 
 build({
-  entryPoints: ['index.js'],
+  entryPoints: ['src/index.js'],
   bundle: true,
   platform: 'node',
   format: 'esm',

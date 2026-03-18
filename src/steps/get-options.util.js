@@ -1,7 +1,9 @@
+import { execSync } from 'node:child_process';
 import inquirer from 'inquirer';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import { execSync } from 'node:child_process';
+
+import { createDisplayFunctions } from './utils/index.js';
 
 const argv = yargs(hideBin(process.argv))
   .scriptName('Delete Untracked Git Branches')
@@ -25,24 +27,6 @@ const argv = yargs(hideBin(process.argv))
     default: false
   })
   .parseSync();
-
-let stepNumber = 1;
-const numberOfSteps = 5;
-const execOptions = { cwd: process.cwd(), stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' };
-
-const display = (content, indent = 0) => console.log(`${indent ? '  '.repeat(indent) : '\n'}${content}`);
-const displayProgress = content => display(`[${stepNumber++}/${numberOfSteps}] ${content}`);
-const displayInfo = content => display(`- ${content}`, 1);
-
-const executeCommand = (command, errorMessage) => {
-  try {
-    return execSync(command, execOptions);
-  } catch (error) {
-    displayInfo(errorMessage);
-    displayInfo(error.message);
-    process.exit(1);
-  }
-};
 
 const questions = [
   {
@@ -76,13 +60,24 @@ export const getOptions = async () => {
   const protectedBranches = answers.protectedBranches || argv.protectedBranches;
   const dryRun = answers.dryRun ?? argv.dryRun;
 
+  const displayFunctions = createDisplayFunctions({ totalSteps: 4 });
+
+  const execOptions = { cwd: process.cwd(), stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' };
+  const executeCommand = (command, errorMessage) => {
+    try {
+      return execSync(command, execOptions);
+    } catch (error) {
+      displayFunctions.displayInfo(errorMessage);
+      displayFunctions.displayInfo(error.message);
+      process.exit(1);
+    }
+  };
+
   return {
     checkoutBranch,
     protectedBranches,
     dryRun,
-    display,
-    displayProgress,
-    displayInfo,
-    executeCommand
+    executeCommand,
+    ...displayFunctions
   };
 };

@@ -4,11 +4,9 @@ export const deleteUntrackedGitBranches = ({
   checkoutBranch,
   protectedBranches,
   dryRun,
-  displayProgress,
   displayInfo,
   executeCommand
 }) => {
-  displayProgress('Finding untracked branches');
   const untrackedBranches = getUntrackedBranches({
     checkoutBranch,
     protectedBranches,
@@ -16,17 +14,17 @@ export const deleteUntrackedGitBranches = ({
   });
 
   if (!untrackedBranches?.length) {
-    return displayProgress('No untracked branches to delete');
+    return displayInfo('No untracked branches to delete');
   }
 
   if (dryRun) {
-    displayProgress('Listing untracked branches:');
+    displayInfo('Listing untracked branches:');
     return untrackedBranches.forEach(branch => {
       displayInfo(branch);
     });
   }
 
-  displayProgress('Deleting untracked branches:');
+  displayInfo('Deleting untracked branches:');
   untrackedBranches.forEach(branch => {
     displayInfo(branch);
     executeCommand(`git branch -D ${branch}`, `Failed to delete branch ${branch}`);

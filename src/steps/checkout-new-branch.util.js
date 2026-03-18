@@ -1,15 +1,15 @@
 import { getCurrentBranch } from './utils/index.js';
 
-export const checkoutNewBranch = ({ checkoutBranch, displayProgress, executeCommand }) => {
+export const checkoutNewBranch = ({ checkoutBranch, displayInfo, executeCommand }) => {
   if (!checkoutBranch) {
-    return displayProgress('No checkout branch, staying on current branch');
+    return displayInfo('No checkout branch, staying on current branch');
   }
 
   const currentBranch = getCurrentBranch({ executeCommand });
   if (checkoutBranch === currentBranch) {
-    return displayProgress(`Already on branch ${checkoutBranch}`);
+    return displayInfo(`Already on branch ${checkoutBranch}`);
   }
 
-  displayProgress(`Checking out branch ${checkoutBranch}`);
+  displayInfo(`Checking out branch ${checkoutBranch}`);
   executeCommand(`git checkout ${checkoutBranch}`, `Failed to check out branch ${checkoutBranch}`);
 };

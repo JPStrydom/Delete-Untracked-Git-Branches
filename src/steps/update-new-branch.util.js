@@ -1,7 +1,7 @@
 import { getCurrentBranch } from './utils/index.js';
 
-export const updateNewBranch = ({ displayProgress, executeCommand }) => {
+export const updateNewBranch = ({ displayInfo, executeCommand }) => {
   const currentBranch = getCurrentBranch({ executeCommand });
-  displayProgress(`Updating branch ${currentBranch} from origin`);
+  displayInfo(`Updating branch ${currentBranch} from origin`);
   executeCommand(`git pull origin ${currentBranch}`, `Failed to update branch ${currentBranch} from origin`);
 };
