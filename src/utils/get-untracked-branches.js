@@ -6,7 +6,7 @@ const createUntrackedBranchFilter =
     !protectedBranches?.includes(branchName) &&
     (!upstreamBranch || upstreamTrack === '[gone]');
 
-const getUntrackedBranches = ({ checkoutBranch, protectedBranches, executeCommand }) =>
+export const getUntrackedBranches = ({ checkoutBranch, protectedBranches, executeCommand }) =>
   executeCommand(
     'git for-each-ref refs/heads --format="%(refname:short) %(upstream:short) %(upstream:track)"'
   )
@@ -14,5 +14,3 @@ const getUntrackedBranches = ({ checkoutBranch, protectedBranches, executeComman
     .map(branchRef => branchRef.split(' '))
     .filter(createUntrackedBranchFilter({ checkoutBranch, protectedBranches }))
     .map(([branchName]) => branchName);
-
-module.exports = { getUntrackedBranches };

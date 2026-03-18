@@ -1,6 +1,6 @@
-const { getUntrackedBranches } = require('./utils');
+import { getUntrackedBranches } from './utils/index.js';
 
-const deleteUntrackedGitBranches = ({
+export const deleteUntrackedGitBranches = ({
   checkoutBranch,
   protectedBranches,
   dryRun,
@@ -32,5 +32,3 @@ const deleteUntrackedGitBranches = ({
     executeCommand(`git branch -D ${branch}`, `Failed to delete branch ${branch}`);
   });
 };
-
-module.exports = { deleteUntrackedGitBranches };

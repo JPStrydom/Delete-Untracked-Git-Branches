@@ -1,4 +1,2 @@
-const { getCurrentBranch } = require('./get-current-branch');
-const { getUntrackedBranches } = require('./get-untracked-branches');
-
-module.exports = { getCurrentBranch, getUntrackedBranches };
+export { getCurrentBranch } from './get-current-branch.js';
+export { getUntrackedBranches } from './get-untracked-branches.js';

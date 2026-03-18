@@ -1,9 +1,9 @@
-const path = require('path');
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
-const { execSync } = require('child_process');
+import inquirer from 'inquirer';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
+import { execSync } from 'node:child_process';
 
-const { checkoutBranch, protectedBranches, dryRun } = yargs(hideBin(process.argv))
+const argv = yargs(hideBin(process.argv))
   .scriptName('Delete Untracked Git Branches')
   .usage('delete-untracked-git-branches -- -c dev -p dev,master')
   .option('c', {
@@ -24,7 +24,7 @@ const { checkoutBranch, protectedBranches, dryRun } = yargs(hideBin(process.argv
     type: 'boolean',
     default: false
   })
-  .parse();
+  .parseSync();
 
 let stepNumber = 1;
 const numberOfSteps = 5;
@@ -44,14 +44,45 @@ const executeCommand = (command, errorMessage) => {
   }
 };
 
-const getOptions = () => ({
-  checkoutBranch,
-  protectedBranches,
-  dryRun,
-  display,
-  displayProgress,
-  displayInfo,
-  executeCommand
-});
+const questions = [
+  {
+    type: 'input',
+    name: 'checkoutBranch',
+    message:
+      'Which branch would you like to check out before deleting untracked branches? (Leave empty for no checkout)',
+    default: argv.checkoutBranch || '',
+    when: argv.checkoutBranch === undefined
+  },
+  {
+    type: 'input',
+    name: 'protectedBranches',
+    message: 'Which branches should be protected from deletion? (Comma-separated, e.g. "dev,master")',
+    default: argv.protectedBranches || 'main,master,dev,develop',
+    when: argv.protectedBranches === undefined
+  },
+  {
+    type: 'confirm',
+    name: 'dryRun',
+    message: 'Would you like to perform a dry run? (List branches without deleting them)',
+    default: argv.dryRun || false,
+    when: argv.dryRun === undefined
+  }
+];
 
-module.exports = { getOptions };
+export const getOptions = async () => {
+  const answers = await inquirer.prompt(questions);
+
+  const checkoutBranch = answers.checkoutBranch || argv.checkoutBranch;
+  const protectedBranches = answers.protectedBranches || argv.protectedBranches;
+  const dryRun = answers.dryRun ?? argv.dryRun;
+
+  return {
+    checkoutBranch,
+    protectedBranches,
+    dryRun,
+    display,
+    displayProgress,
+    displayInfo,
+    executeCommand
+  };
+};

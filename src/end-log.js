@@ -1,5 +1,3 @@
-const endLog = ({ display }) => {
+export const endLog = ({ display }) => {
   display('Done');
 };
-
-module.exports = { endLog };

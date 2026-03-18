@@ -1,6 +1,10 @@
-const { execSync } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+import { execSync } from 'node:child_process';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let stepNumber = 1;
 const numberOfSteps = 5;
@@ -35,7 +39,7 @@ const setupRemoteRepository = () => {
 const setupLocalRepository = () => {
   fs.mkdirSync(repoDir);
   runCommand('git init', repoDir);
-  runCommand('npm init -y', repoDir); // Add this line
+  runCommand('npm init -y', repoDir);
   runCommand('git commit --allow-empty -m "Initial commit"', repoDir);
   displayInfo(`Initialized a test repository at ${repoDir}`);
 

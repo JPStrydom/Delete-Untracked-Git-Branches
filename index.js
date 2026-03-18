@@ -1,4 +1,4 @@
-const {
+import {
   getOptions,
   startLog,
   endLog,
@@ -6,9 +6,9 @@ const {
   checkoutNewBranch,
   updateNewBranch,
   deleteUntrackedGitBranches
-} = require('./src');
+} from './src/index.js';
 
-const options = getOptions();
+const options = await getOptions();
 
 startLog(options);
 
